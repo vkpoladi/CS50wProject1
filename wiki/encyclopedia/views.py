@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from . import util
 from django import forms
 
+import random
+
 #import installed Markdown2 and save in variable
 #this will be used to convert markdown entry files to html
 #pip install markdown2
@@ -113,3 +115,12 @@ def save(request, title):
                 "title":title
             })
 
+def random_entry(request):
+    entries = util.list_entries()
+    list_entry = random.randint(0,len(entries)-1)
+    entry = entries[list_entry]
+    md_entry = util.get_entry(entry)
+    return render(request, "encyclopedia/entries.html", {
+        "title":markdowner.convert(md_entry),
+        "heading":entry
+    })

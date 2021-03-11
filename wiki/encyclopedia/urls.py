@@ -14,5 +14,6 @@ urlpatterns = [
     # Then pagename = request.POST.get("edit")
     # This would allow edit function to only have 1 argument (request)
 
-    path("save/<str:title>", views.save, name="save")
+    path("save/<str:title>", views.save, name="save"),
+    path("random", views.random_entry, name="random_entry")
 ]
