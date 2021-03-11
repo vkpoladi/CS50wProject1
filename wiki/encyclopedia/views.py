@@ -17,6 +17,10 @@ def index(request):
 
 def entry(request, title):
     md_entry = util.get_entry(title)
-    return render(request, "encyclopedia/entries.html", {
-        "title":markdowner.convert(md_entry)
+    if md_entry == None:
+        return HttpResponse(f"ERROR: {title} page not found in Encyclopedia")
+    else:
+        return render(request, "encyclopedia/entries.html", {
+            "title":markdowner.convert(md_entry),
+            "heading":title
     })
