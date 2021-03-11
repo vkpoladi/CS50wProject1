@@ -9,10 +9,15 @@ from django import forms
 from markdown2 import Markdown
 markdowner = Markdown()
 
-#Create form class to use for new.html page
+#Create new page form class to use for new.html page
 class NewPageForm(forms.Form):
     new_title = forms.CharField(label="Entry Title")
     new_text = forms.CharField(label="Entry Text")
+
+#Create new edit form class to use for edit.html page
+class EditForm(forms.Form):
+    #edit_title = forms.CharField(label="Edit Title")
+    edit_text = forms.CharField(label="Edit Text")
 
 
 # Create your views here.
@@ -78,3 +83,33 @@ def new(request):
     return render(request, "encyclopedia/new.html", {
         "form":NewPageForm()
     })
+
+def edit(request, heading):
+    page_name = heading
+    page_body = util.get_entry(page_name)
+
+    form = EditForm(initial={'edit_text':page_body})
+    return render(request, "encyclopedia/edit.html", {
+        "form":form,
+        "title":page_name
+    })
+
+def save(request, title):
+    if request.method == "POST":
+        form = EditForm(request.POST)
+        if form.is_valid():
+            #edited_name = form.cleaned_data["edit_title"]
+            edited_text = form.cleaned_data["edit_text"]
+            util.save_entry(title,edited_text)
+            
+            md_entry = util.get_entry(title)
+            return render(request, "encyclopedia/entries.html", {
+                "title":markdowner.convert(md_entry),
+                "heading":title
+            })
+        else:
+            return render (request, "encyclopedia/edit.html", {
+                "form":form,
+                "title":title
+            })
+
