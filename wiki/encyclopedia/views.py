@@ -13,13 +13,14 @@ markdowner = Markdown()
 
 #Create new page form class to use for new.html page
 class NewPageForm(forms.Form):
-    new_title = forms.CharField(label="Entry Title")
-    new_text = forms.CharField(label="Entry Text")
+    new_title = forms.CharField(label="Entry Title", widget=forms.TextInput(attrs={'class':'special', 'size':112.5
+    }))
+    new_text = forms.CharField(label="", widget=forms.Textarea(attrs={'size':'40'}))
 
 #Create new edit form class to use for edit.html page
 class EditForm(forms.Form):
     #edit_title = forms.CharField(label="Edit Title")
-    edit_text = forms.CharField(label="Edit Text")
+    edit_text = forms.CharField(label="", widget=forms.Textarea(attrs={'size':'40'}))
 
 
 # Create your views here.

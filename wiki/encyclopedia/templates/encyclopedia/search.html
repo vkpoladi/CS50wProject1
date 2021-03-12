@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block body %} 
+    <h1 style="font-size:large">
+        Search Results for {{ search_word }}
+    </h1>
     <ul>
         {% for entry in similar_entries %} 
             <li><a href="{% url 'entry' entry%}">{{ entry }}</a></li>

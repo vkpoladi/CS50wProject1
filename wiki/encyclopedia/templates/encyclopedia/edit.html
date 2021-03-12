@@ -6,11 +6,15 @@
 
 
 {% block body %}
-
-    Edit {{ title }} Page:
+    <h1 style="font-size:large">
+        Edit {{ title }} Page:
+    </h1>
+    
     <form action="{% url 'save' title %}" method="POST">
         {% csrf_token %}
-        {{ form }}
+        <div>   
+            {{ form }}
+        </div>
         <input type="submit">
     </form>
     
